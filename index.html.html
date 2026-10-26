@@ -1,0 +1,265 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Community Grammar Steps</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Andika:wght@400;700&display=swap">
+<style>
+/* Layout: a town-map feel — level "stops" along the top like street signs, one big stage for the projector, huge answer buttons. Single bright classroom look. */
+:root{
+  --bg:#f3eef7; --panel:#ffffff; --ink:#23202a; --muted:#5d5866;
+  --main:#c2187a; --main-soft:#fbe3f0; --road:#3b4a6b; --sun:#ffd23f;
+  --ok:#2e8b3a; --no:#d6332b; --line:#ddd1e6; --gold:#e0a800;
+  --display:'Baloo 2','Trebuchet MS',system-ui,sans-serif;
+  --body:'Andika','Comic Sans MS',system-ui,sans-serif;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:14px 28px}
+.wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,4.4vw,46px);line-height:1;margin:0;color:var(--road);text-wrap:balance}
+h1 span{color:var(--main)}
+.score{font-family:var(--display);font-weight:800;font-size:22px;background:var(--panel);border:3px solid var(--line);border-radius:999px;padding:4px 16px;display:flex;align-items:center;gap:8px;font-variant-numeric:tabular-nums}
+.score .star{color:var(--gold)}
+nav{display:flex;flex-wrap:wrap;gap:8px}
+nav button{font-family:var(--display);font-weight:700;font-size:16px;border:3px solid var(--line);background:var(--panel);color:var(--ink);border-radius:12px;padding:5px 12px;cursor:pointer;min-height:48px;display:flex;align-items:center;gap:8px}
+nav button .lv{display:inline-flex;width:26px;height:26px;border-radius:6px;background:var(--road);color:#fff;align-items:center;justify-content:center;font-size:15px}
+nav button[aria-current="true"]{border-color:var(--main);background:var(--main);color:#fff}
+nav button[aria-current="true"] .lv{background:#fff;color:var(--main)}
+button:focus-visible{outline:4px solid var(--sun);outline-offset:2px}
+.stage{background:var(--panel);border:4px solid var(--line);border-radius:28px;padding:18px clamp(14px,3vw,30px) 22px;display:flex;flex-direction:column;gap:14px;align-items:center;min-width:0}
+.goal{font-family:var(--display);font-weight:700;font-size:clamp(20px,2.6vw,28px);text-align:center;margin:0;text-wrap:balance}
+.goal small{display:block;font-family:var(--body);font-weight:400;font-size:16px;color:var(--muted)}
+.dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.dots i{width:14px;height:14px;border-radius:50%;background:var(--line);display:block}
+.dots i.done{background:var(--ok)} .dots i.miss{background:var(--sun)} .dots i.now{outline:3px solid var(--main);outline-offset:1px}
+.scene{display:flex;align-items:center;justify-content:center;gap:clamp(10px,3vw,28px);flex-wrap:wrap;min-height:170px}
+.person{display:flex;flex-direction:column;align-items:center;gap:2px;font-family:var(--display);font-weight:800;font-size:26px}
+.person svg{width:clamp(80px,11vw,110px);height:auto}
+.badge{display:inline-flex;align-items:center;justify-content:center;min-width:92px;height:92px;padding:0 14px;border-radius:999px;background:var(--main-soft);border:4px solid var(--main);color:var(--main);font-family:var(--display);font-weight:800;font-size:40px}
+.pic svg{width:clamp(110px,16vw,160px);height:auto;display:block}
+.clue{display:flex;flex-direction:column;align-items:center;gap:4px;background:#faf7fc;border:3px dashed var(--line);border-radius:20px;padding:10px 20px;min-width:140px}
+.mark{font-family:var(--display);font-weight:800;font-size:60px;line-height:1}
+.mark.ok{color:var(--ok)} .mark.no{color:var(--no)} .mark.q{color:var(--main)}
+.stars{font-family:Arial,sans-serif;font-size:40px;letter-spacing:2px;line-height:1;white-space:nowrap}
+.stars b{color:var(--gold);font-weight:400} .stars i{color:#d4d0da;font-style:normal}
+.word{font-family:var(--display);font-weight:700;font-size:24px;text-align:center}
+.sentence{font-family:var(--display);font-weight:700;font-size:clamp(24px,3.8vw,42px);text-align:center;min-height:1.3em;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px}
+.gap{display:inline-block;min-width:120px;border-bottom:5px solid var(--main);text-align:center;color:var(--main)}
+.answers{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;width:100%}
+.ans{font-family:var(--display);font-weight:800;font-size:clamp(22px,3.2vw,36px);min-width:160px;min-height:74px;padding:6px 24px;border-radius:22px;border:4px solid var(--road);background:#fff;color:var(--road);cursor:pointer;box-shadow:0 6px 0 var(--road);transition:transform .08s}
+.ans:active{transform:translateY(4px);box-shadow:0 2px 0 var(--road)}
+.ans.wide{min-width:min(100%,380px);font-size:clamp(20px,2.8vw,30px)}
+.ans.right{background:var(--ok);border-color:var(--ok);color:#fff;box-shadow:0 6px 0 #1d5e26}
+.ans.wrong{background:#fde3e1;border-color:var(--no);color:var(--no);box-shadow:0 6px 0 var(--no)}
+.ans[disabled]{cursor:default}
+.build{width:100%;display:flex;flex-direction:column;gap:12px;align-items:center}
+.slot{min-height:82px;width:100%;max-width:860px;border:4px dashed var(--line);border-radius:20px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;padding:8px;background:#fcfbfd}
+.slot.right{border-color:var(--ok);background:#e9f7ec} .slot.wrong{border-color:var(--no);background:#fdf0ef}
+.bank{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.tile{font-family:var(--display);font-weight:700;font-size:clamp(20px,2.8vw,30px);min-height:60px;min-width:60px;padding:2px 16px;border-radius:14px;border:3px solid #999;cursor:pointer;color:var(--ink)}
+.tile.s{background:#d9ecff;border-color:#6ea7de} .tile.x{background:#f1e6fb;border-color:#a77bd0} .tile.v{background:#ffe0dc;border-color:#e08a80}
+.tile.n{background:#e6e6e6;border-color:#9a9a9a} .tile.a{background:#ddf3d6;border-color:#7fbf6e} .tile.p{background:#fff3b0;border-color:#d8b93a}
+.tile.used{visibility:hidden}
+.tools{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.tool{font-family:var(--display);font-weight:700;font-size:18px;min-height:48px;padding:4px 18px;border-radius:14px;border:3px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+.tool.go{background:var(--road);border-color:var(--road);color:#fff}
+.feedback{min-height:62px;width:100%;max-width:860px;border-radius:18px;padding:10px 16px;font-size:20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.feedback.good{background:#e1f4e5;color:#1d5e26} .feedback.bad{background:#fdecea;color:#9c241e} .feedback.hint{background:#fff7d1;color:#6b5400}
+.feedback b{font-family:var(--display);font-size:23px}
+.next{font-family:var(--display);font-weight:800;font-size:22px;min-height:56px;padding:4px 26px;border-radius:16px;border:none;background:var(--main);color:#fff;cursor:pointer}
+.rule{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;font-size:17px;color:var(--muted)}
+.rule span{background:var(--panel);border:2px solid var(--line);border-radius:999px;padding:4px 14px}
+.rule b{color:var(--ink)}
+.done-card{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.done-card .big{font-family:var(--display);font-weight:800;font-size:56px;color:var(--road);line-height:1}
+.bigstars{font-size:46px;color:var(--gold);letter-spacing:6px}
+footer{font-size:15px;color:var(--muted);text-align:center}
+@media (max-width:560px){.ans{min-width:120px;min-height:62px}.scene{min-height:140px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@keyframes pop{0%{transform:scale(.92)}60%{transform:scale(1.05)}100%{transform:scale(1)}}
+.pop{animation:pop .35s ease-out}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Community <span>Grammar</span></h1>
+    <div class="score" aria-live="polite"><span class="star">★</span><span id="score">0</span></div>
+  </header>
+  <nav id="levels" aria-label="Levels"></nav>
+  <main class="stage" id="stage"></main>
+  <div class="rule" id="rule"></div>
+  <footer>Unit 1 · Community — How often do you go …? · He borrows · She does not borrow (sin contracciones).</footer>
+</div>
+
+<script>
+const SVG = {"borrow": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M30 60 Q65 46 100 62 Q135 46 170 60 V160 Q135 146 100 162 Q65 146 30 160 Z\" fill=\"#2f7fd6\"/><path d=\"M100 62 V162\" fill=\"none\"/><path d=\"M120 140 L180 120 L190 150 L130 170 Z\" fill=\"#ffd23f\"/><path d=\"M140 150 L170 140\" fill=\"none\" stroke-width=\"3\"/></svg>", "buyfood": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M40 80 H160 L150 186 H50 Z\" fill=\"#d9a35a\"/><path d=\"M70 80 Q70 40 100 40 Q130 40 130 80\" fill=\"none\" stroke-width=\"6\"/><circle cx=\"76\" cy=\"76\" r=\"16\" fill=\"#e8403a\"/><path d=\"M104 40 L120 80 L96 80 Z\" fill=\"#f28c28\"/><rect x=\"128\" y=\"50\" width=\"22\" height=\"34\" fill=\"#fff\"/></svg>", "meetfriends": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"64\" cy=\"70\" r=\"20\" fill=\"#f6c9a0\"/><path d=\"M44 66 Q64 40 84 66\" fill=\"#2b2b2b\"/><rect x=\"46\" y=\"92\" width=\"36\" height=\"56\" rx=\"12\" fill=\"#e84a8a\"/><path d=\"M56 148 V186 M72 148 V186\" fill=\"none\" stroke-width=\"8\"/><circle cx=\"136\" cy=\"70\" r=\"20\" fill=\"#f6c9a0\"/><path d=\"M116 66 Q136 40 156 66\" fill=\"#6b3a1e\"/><rect x=\"118\" y=\"92\" width=\"36\" height=\"56\" rx=\"12\" fill=\"#3fa34d\"/><path d=\"M128 148 V186 M144 148 V186\" fill=\"none\" stroke-width=\"8\"/><path d=\"M82 100 L100 70 L118 100\" fill=\"none\" stroke=\"#f6c9a0\" stroke-width=\"10\"/><path d=\"M90 56 L100 40 L110 56\" fill=\"none\" stroke=\"#ffd23f\" stroke-width=\"4\"/></svg>", "sendcard": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"24\" y=\"60\" width=\"152\" height=\"100\" rx=\"6\" fill=\"#ffe8a8\"/><path d=\"M24 60 L100 118 L176 60\" fill=\"none\"/><path d=\"M150 30 L162 46 L180 44 L168 58 L174 76 L158 68 L142 76 L146 58 L134 44 L152 46 Z\" fill=\"#e84a8a\"/></svg>", "writestory": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"40\" y=\"30\" width=\"110\" height=\"150\" rx=\"6\" fill=\"#fff\"/><path d=\"M56 60 H134\" fill=\"none\" stroke-width=\"3\"/><path d=\"M56 82 H134\" fill=\"none\" stroke-width=\"3\"/><path d=\"M56 104 H134\" fill=\"none\" stroke-width=\"3\"/><path d=\"M56 126 H134\" fill=\"none\" stroke-width=\"3\"/><path d=\"M120 160 L176 70 L190 80 L134 170 L116 176 Z\" fill=\"#ffd23f\"/></svg>", "museum": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M18 84 L100 30 L182 84 Z\" fill=\"#c9a86a\"/><rect x=\"24\" y=\"84\" width=\"152\" height=\"14\" fill=\"#f2ecd9\"/><rect x=\"40\" y=\"96\" width=\"14\" height=\"80\" fill=\"#f2ecd9\"/><rect x=\"72\" y=\"96\" width=\"14\" height=\"80\" fill=\"#f2ecd9\"/><rect x=\"114\" y=\"96\" width=\"14\" height=\"80\" fill=\"#f2ecd9\"/><rect x=\"146\" y=\"96\" width=\"14\" height=\"80\" fill=\"#f2ecd9\"/><rect x=\"20\" y=\"176\" width=\"160\" height=\"12\" fill=\"#f2ecd9\"/><path d=\"M10 188 H190\" fill=\"none\" stroke-width=\"5\"/></svg>", "library": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"28\" y=\"84\" width=\"144\" height=\"102\" fill=\"#fde7e7\"/><rect x=\"18\" y=\"56\" width=\"164\" height=\"30\" rx=\"4\" fill=\"#e8403a\"/><rect x=\"36\" y=\"112\" width=\"34\" height=\"30\" fill=\"#bfe3fb\"/><rect x=\"130\" y=\"112\" width=\"34\" height=\"30\" fill=\"#bfe3fb\"/><rect x=\"84\" y=\"136\" width=\"32\" height=\"50\" fill=\"#8b5a3c\"/><path d=\"M10 188 H190\" fill=\"none\" stroke-width=\"5\"/><rect x=\"56\" y=\"6\" width=\"88\" height=\"44\" rx=\"6\" fill=\"#e8403a\"/><path d=\"M68 16 Q84 12 100 18 Q116 12 132 16 V42 Q116 38 100 44 Q84 38 68 42 Z\" fill=\"#fff\"/><path d=\"M100 18 V44\" fill=\"none\" stroke-width=\"3\"/></svg>", "cinema": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"28\" y=\"84\" width=\"144\" height=\"102\" fill=\"#f1e8fb\"/><rect x=\"18\" y=\"56\" width=\"164\" height=\"30\" rx=\"4\" fill=\"#7b52c7\"/><rect x=\"36\" y=\"112\" width=\"34\" height=\"30\" fill=\"#bfe3fb\"/><rect x=\"130\" y=\"112\" width=\"34\" height=\"30\" fill=\"#bfe3fb\"/><rect x=\"84\" y=\"136\" width=\"32\" height=\"50\" fill=\"#8b5a3c\"/><path d=\"M10 188 H190\" fill=\"none\" stroke-width=\"5\"/><rect x=\"50\" y=\"8\" width=\"100\" height=\"42\" rx=\"6\" fill=\"#7b52c7\"/><circle cx=\"78\" cy=\"29\" r=\"12\" fill=\"#fff\"/><circle cx=\"104\" cy=\"29\" r=\"12\" fill=\"#fff\"/><path d=\"M118 22 L136 14 V44 L118 36 Z\" fill=\"#fff\"/></svg>", "park": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"10\" y=\"150\" width=\"180\" height=\"38\" fill=\"#7cc943\"/><rect x=\"54\" y=\"110\" width=\"12\" height=\"44\" fill=\"#8b5a3c\"/><circle cx=\"60\" cy=\"86\" r=\"34\" fill=\"#3fa34d\"/><rect x=\"134\" y=\"120\" width=\"10\" height=\"34\" fill=\"#8b5a3c\"/><circle cx=\"139\" cy=\"104\" r=\"24\" fill=\"#3fa34d\"/><rect x=\"84\" y=\"140\" width=\"40\" height=\"8\" fill=\"#8b5a3c\"/></svg>", "pool": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"14\" y=\"70\" width=\"172\" height=\"110\" rx=\"12\" fill=\"#dfe7ef\"/><rect x=\"30\" y=\"92\" width=\"140\" height=\"70\" rx=\"6\" fill=\"#5ec7e6\"/><path d=\"M36 112 Q52 102 68 112 T100 112 T132 112 T164 112 M36 136 Q52 126 68 136 T100 136 T132 136 T164 136\" fill=\"none\" stroke=\"#fff\" stroke-width=\"4\"/><path d=\"M150 40 V92 M170 40 V92 M150 54 H170 M150 70 H170\" fill=\"none\" stroke-width=\"5\"/><circle cx=\"62\" cy=\"42\" r=\"12\" fill=\"#ffd23f\"/><path d=\"M72 52 Q90 60 104 56\" fill=\"none\" stroke-width=\"6\"/></svg>", "supermarket": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"28\" y=\"84\" width=\"144\" height=\"102\" fill=\"#e3f1fd\"/><rect x=\"18\" y=\"56\" width=\"164\" height=\"30\" rx=\"4\" fill=\"#2f7fd6\"/><rect x=\"36\" y=\"112\" width=\"34\" height=\"30\" fill=\"#bfe3fb\"/><rect x=\"130\" y=\"112\" width=\"34\" height=\"30\" fill=\"#bfe3fb\"/><rect x=\"84\" y=\"136\" width=\"32\" height=\"50\" fill=\"#8b5a3c\"/><path d=\"M10 188 H190\" fill=\"none\" stroke-width=\"5\"/><rect x=\"56\" y=\"4\" width=\"88\" height=\"46\" rx=\"6\" fill=\"#2f7fd6\"/><path d=\"M70 18 H80 L88 38 H116 L122 22 H84\" fill=\"none\" stroke=\"#fff\" stroke-width=\"4\"/><circle cx=\"92\" cy=\"44\" r=\"3\" fill=\"#fff\" stroke=\"none\"/><circle cx=\"112\" cy=\"44\" r=\"3\" fill=\"#fff\" stroke=\"none\"/></svg>", "skatepark": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M10 188 V120 Q10 180 70 180 H130 Q190 180 190 120 V188 Z\" fill=\"#c9c9c9\"/><path d=\"M10 188 H190\" fill=\"none\" stroke-width=\"5\"/><rect x=\"70\" y=\"60\" width=\"64\" height=\"14\" rx=\"7\" fill=\"#f28c28\" transform=\"rotate(-15 102 67)\"/><circle cx=\"80\" cy=\"86\" r=\"8\" fill=\"#fff\"/><circle cx=\"126\" cy=\"74\" r=\"8\" fill=\"#fff\"/><path d=\"M100 40 Q120 20 150 30\" fill=\"none\" stroke=\"#f28c28\" stroke-width=\"5\" stroke-dasharray=\"3 10\"/></svg>", "cafe": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"28\" y=\"84\" width=\"144\" height=\"102\" fill=\"#fff3e0\"/><rect x=\"18\" y=\"56\" width=\"164\" height=\"30\" rx=\"4\" fill=\"#8b5a3c\"/><rect x=\"36\" y=\"112\" width=\"34\" height=\"30\" fill=\"#bfe3fb\"/><rect x=\"130\" y=\"112\" width=\"34\" height=\"30\" fill=\"#bfe3fb\"/><rect x=\"84\" y=\"136\" width=\"32\" height=\"50\" fill=\"#8b5a3c\"/><path d=\"M10 188 H190\" fill=\"none\" stroke-width=\"5\"/><rect x=\"62\" y=\"4\" width=\"76\" height=\"46\" rx=\"6\" fill=\"#8b5a3c\"/><path d=\"M80 20 H112 V32 Q112 44 96 44 Q80 44 80 32 Z\" fill=\"#fff\"/><path d=\"M112 24 Q124 26 112 36\" fill=\"none\" stroke=\"#fff\" stroke-width=\"3\"/><path d=\"M28 86 h22 v14 q-11 10 -22 0 Z\" fill=\"#e8403a\"/><path d=\"M52 86 h22 v14 q-11 10 -22 0 Z\" fill=\"#fff\"/><path d=\"M76 86 h22 v14 q-11 10 -22 0 Z\" fill=\"#e8403a\"/><path d=\"M100 86 h22 v14 q-11 10 -22 0 Z\" fill=\"#fff\"/><path d=\"M124 86 h22 v14 q-11 10 -22 0 Z\" fill=\"#e8403a\"/><path d=\"M148 86 h22 v14 q-11 10 -22 0 Z\" fill=\"#fff\"/></svg>", "station": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M14 90 Q100 20 186 90 Z\" fill=\"#6b7686\"/><rect x=\"22\" y=\"88\" width=\"156\" height=\"98\" fill=\"#e8eef4\"/><rect x=\"60\" y=\"104\" width=\"80\" height=\"62\" rx=\"12\" fill=\"#e8403a\"/><rect x=\"72\" y=\"114\" width=\"56\" height=\"22\" rx=\"4\" fill=\"#bfe3fb\"/><circle cx=\"80\" cy=\"152\" r=\"5\" fill=\"#fff\"/><circle cx=\"120\" cy=\"152\" r=\"5\" fill=\"#fff\"/><path d=\"M60 186 L72 166 M140 186 L128 166 M10 188 H190\" fill=\"none\" stroke-width=\"5\"/></svg>", "market": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M16 80 h70 l6 22 h-82 Z\" fill=\"#3fa34d\"/><rect x=\"20\" y=\"102\" width=\"62\" height=\"70\" fill=\"#f2d39a\"/><circle cx=\"34\" cy=\"120\" r=\"8\" fill=\"#e8403a\"/><circle cx=\"51\" cy=\"120\" r=\"8\" fill=\"#ffd23f\"/><circle cx=\"68\" cy=\"120\" r=\"8\" fill=\"#3fa34d\"/><path d=\"M110 80 h70 l6 22 h-82 Z\" fill=\"#e84a8a\"/><rect x=\"114\" y=\"102\" width=\"62\" height=\"70\" fill=\"#f2d39a\"/><circle cx=\"128\" cy=\"120\" r=\"8\" fill=\"#e8403a\"/><circle cx=\"145\" cy=\"120\" r=\"8\" fill=\"#ffd23f\"/><circle cx=\"162\" cy=\"120\" r=\"8\" fill=\"#3fa34d\"/><path d=\"M10 188 H190 M22 172 V188 M82 172 V188 M116 172 V188 M176 172 V188\" fill=\"none\" stroke-width=\"5\"/></svg>", "postoffice": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"28\" y=\"84\" width=\"144\" height=\"102\" fill=\"#ffe8a8\"/><rect x=\"18\" y=\"56\" width=\"164\" height=\"30\" rx=\"4\" fill=\"#e8403a\"/><rect x=\"36\" y=\"112\" width=\"34\" height=\"30\" fill=\"#bfe3fb\"/><rect x=\"130\" y=\"112\" width=\"34\" height=\"30\" fill=\"#bfe3fb\"/><rect x=\"84\" y=\"136\" width=\"32\" height=\"50\" fill=\"#8b5a3c\"/><path d=\"M10 188 H190\" fill=\"none\" stroke-width=\"5\"/><rect x=\"66\" y=\"4\" width=\"68\" height=\"46\" rx=\"6\" fill=\"#e8403a\"/><rect x=\"76\" y=\"14\" width=\"48\" height=\"28\" fill=\"#fff\"/><path d=\"M76 14 L100 32 L124 14\" fill=\"none\" stroke-width=\"3\"/></svg>", "boy": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"96\" r=\"50\" fill=\"#d9a073\"/><path d=\"M50 90 Q46 40 100 40 Q154 40 150 90 Q140 64 100 62 Q60 64 50 90 Z\" fill=\"#2b2b2b\"/><circle cx=\"82\" cy=\"96\" r=\"7\" fill=\"#fff\"/><circle cx=\"83\" cy=\"97\" r=\"3.8500000000000005\" fill=\"#2b2b2b\" stroke=\"none\"/><circle cx=\"118\" cy=\"96\" r=\"7\" fill=\"#fff\"/><circle cx=\"119\" cy=\"97\" r=\"3.8500000000000005\" fill=\"#2b2b2b\" stroke=\"none\"/><path d=\"M84 120 Q100 132 116 120\" fill=\"none\"/><path d=\"M54 196 Q60 152 100 148 Q140 152 146 196 Z\" fill=\"#2f7fd6\"/></svg>", "girl": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\" stroke=\"#2b2b2b\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M48 100 Q40 30 100 26 Q160 30 152 100 L160 150 Q130 130 100 130 Q70 130 40 150 Z\" fill=\"#6b3a1e\"/><circle cx=\"100\" cy=\"96\" r=\"48\" fill=\"#f6c9a0\"/><circle cx=\"82\" cy=\"94\" r=\"7\" fill=\"#fff\"/><circle cx=\"83\" cy=\"95\" r=\"3.8500000000000005\" fill=\"#2b2b2b\" stroke=\"none\"/><circle cx=\"118\" cy=\"94\" r=\"7\" fill=\"#fff\"/><circle cx=\"119\" cy=\"95\" r=\"3.8500000000000005\" fill=\"#2b2b2b\" stroke=\"none\"/><path d=\"M84 118 Q100 130 116 118\" fill=\"none\"/><path d=\"M52 72 Q100 30 148 72 Q130 58 100 60 Q70 58 52 72 Z\" fill=\"#6b3a1e\"/><path d=\"M54 196 Q60 150 100 146 Q140 150 146 196 Z\" fill=\"#e84a8a\"/></svg>"};
+const PLACES = [['library','the library'],['cinema','the cinema'],['park','the park'],['pool','the swimming pool'],['supermarket','the supermarket'],
+  ['skatepark','the skate park'],['museum','the museum'],['cafe','the café'],['station','the station'],['market','the market'],['postoffice','the post office']];
+const ACTS = [['borrow','borrow','books'],['buyfood','buy','food'],['meetfriends','meet','friends'],['sendcard','send','a card'],['writestory','write','stories'],
+  ['museum','visit','the museum'],['library','go','to the library'],['cinema','go','to the cinema'],['park','go','to the park'],['supermarket','go','to the supermarket'],['skatepark','go','to the skate park']];
+const PEOPLE = [['Tom','boy','He'],['Ana','girl','She'],['Leo','boy','He'],['Sara','girl','She']];
+const ADV = {4:'always',3:'often',2:'sometimes',0:'never'};
+const ROUNDS = 8;
+const LEVELS = [
+  {id:'adv', name:'How often?', goal:'Look at the stars. Choose the word.', es:'★★★★ always · ★★★ often · ★★ sometimes · ☆☆☆☆ never'},
+  {id:'ask', name:'How often do you …?', goal:'Build the question. Then choose the answer.', es:'Pregunta con you → respuesta con I'},
+  {id:'s', name:'He borrows', goal:'Choose the right verb.', es:'He / She → verbo + s · go → goes'},
+  {id:'neg', name:'She does not', goal:'Look at ✔ or ✘. Choose the right sentence.', es:'✘ → does not + verbo SIN -s'},
+  {id:'build', name:'Build it!', goal:'Tap the words in order.', es:'✔ → verbo + s · ✘ → does not + verbo'},
+  {id:'mix', name:'Super mix', goal:'Everything together!', es:'Repaso de toda la gramática de la unidad'}
+];
+const RULES = {
+  adv:['★★★★ I <b>always</b> go …','★★★ I <b>often</b> go …','★★ I <b>sometimes</b> go …','☆☆☆☆ I <b>never</b> go …'],
+  ask:['How often <b>do you</b> go to the park?','<b>I</b> often go to the park.'],
+  s:['borrow → borrow<b>s</b>','write → write<b>s</b>','go → go<b>es</b>'],
+  neg:['✔ She borrow<b>s</b> books.','✘ She <b>does not</b> borrow books.'],
+  build:['Tom · borrows · books · .','Ana · does not · buy · food · .'],
+  mix:['How often do you go …? I always go …','He borrows … · She does not borrow …']
+};
+let state={level:0,round:0,score:0,results:[],item:null,locked:false,built:[],firstTry:true,kind:null};
+const $=s=>document.querySelector(s);
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>{const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;};
+const third=v=>v==='go'?'goes':v+'s';
+
+let actx=null;
+function beep(good){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const notes=good?[660,880]:[300,220];
+  notes.forEach((f,i)=>{const o=actx.createOscillator(),g=actx.createGain();o.type='triangle';o.frequency.value=f;const t=actx.currentTime+i*.12;
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.25,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.18);o.connect(g).connect(actx.destination);o.start(t);o.stop(t+.2);});}catch(e){}}
+
+function starsHTML(n){return `<span class="stars" aria-label="${ADV[n]}"><b>${'★'.repeat(n)}</b><i>${'☆'.repeat(4-n)}</i></span>`;}
+function personHTML(p){return `<div class="person">${SVG[p[1]]}${p[0]}</div>`;}
+function badge(t){return `<div class="person"><span class="badge">${t}</span></div>`;}
+function pic(k){return `<div class="pic" role="img" aria-label="${k}">${SVG[k]}</div>`;}
+function mark(m){const c=m==='ok'?'ok':m==='no'?'no':'q';return `<span class="mark ${c}">${m==='ok'?'✔':m==='no'?'✘':'?'}</span>`;}
+
+function renderNav(){
+  $('#levels').innerHTML=LEVELS.map((l,i)=>`<button type="button" data-l="${i}" aria-current="${i===state.level}"><span class="lv">${i+1}</span>${l.name}</button>`).join('');
+  $('#levels').querySelectorAll('button').forEach(b=>b.onclick=()=>startLevel(+b.dataset.l));
+  $('#rule').innerHTML=RULES[LEVELS[state.level].id].map(r=>`<span>${r}</span>`).join('');
+}
+function dots(){return `<div class="dots" aria-hidden="true">${Array.from({length:ROUNDS},(_,i)=>`<i class="${state.results[i]===true?'done':state.results[i]===false?'miss':''} ${i===state.round?'now':''}"></i>`).join('')}</div>`;}
+function header(){const L=LEVELS[state.level];return `<p class="goal">${L.goal}<small>${L.es}</small></p>${dots()}`;}
+function startLevel(i){state.level=i;state.round=0;state.results=[];renderNav();newRound();}
+const RENDER={adv:()=>rAdv(),ask:()=>rAsk(),s:()=>rS(),neg:()=>rNeg(),build:()=>rBuild()};
+function newRound(){
+  if(state.round>=ROUNDS) return finish();
+  state.locked=false;state.built=[];state.firstTry=true;
+  let id=LEVELS[state.level].id; if(id==='mix') id=rnd(['adv','ask','s','neg','build']);
+  state.kind=id; RENDER[id]();
+}
+function feedback(kind,html,withNext){const fb=$('#fb');fb.className='feedback '+kind+' pop';fb.innerHTML=`<span>${html}</span>`+(withNext?` <button class="next" id="next" type="button">Next ➜</button>`:'');
+  if(withNext){const n=$('#next');n.onclick=()=>{state.round++;newRound();};n.focus();}}
+function scored(ok){
+  if(ok){ if(state.results[state.round]===undefined) state.results[state.round]=state.firstTry; if(state.firstTry){state.score++;$('#score').textContent=state.score;} }
+  else { state.firstTry=false; }
+  beep(ok);}
+function finalize(){ if(state.results[state.round]===undefined) state.results[state.round]=state.firstTry; }
+function answersHTML(opts,wide){return `<div class="answers">${opts.map(o=>`<button type="button" class="ans ${wide?'wide':''}">${o}</button>`).join('')}</div>`;}
+function bindChoice(sel, right, okMsg, whyFn){
+  document.querySelectorAll(sel).forEach(b=>b.onclick=()=>{
+    if(state.locked||b.disabled) return;
+    if(b.textContent===right){b.classList.add('right');state.locked=true;scored(true);finalize();document.querySelectorAll(sel).forEach(x=>x.disabled=true);feedback('good',okMsg,true);}
+    else{b.classList.add('wrong');b.disabled=true;scored(false);feedback('bad',whyFn(b.textContent),false);}
+  });
+}
+/* 1. adverbs */
+function rAdv(){
+  const [k,place]=rnd(PLACES), n=rnd([4,3,2,0]);
+  $('#stage').innerHTML=header()+`<div class="scene">${badge('I')}${pic(k)}<div class="clue">${starsHTML(n)}</div></div>
+    <div class="sentence">I <span class="gap">?</span> go to ${place}.</div>`+answersHTML(['always','often','sometimes','never'])+`<div class="feedback" id="fb"></div>`;
+  bindChoice('.ans',ADV[n],`<b>I ${ADV[n]} go to ${place}.</b>`,()=>`Count the stars: ${n===0?'no stars':n+' stars'} → <b>${ADV[n]}</b>.`);
+  document.querySelectorAll('.ans').forEach(b=>b.addEventListener('click',()=>{ if(b.classList.contains('right')) $('.gap').textContent=ADV[n]; }));
+}
+/* tiles builder */
+function kindOf(w){if(/^(Tom|Ana|Leo|Sara|I|you)$/.test(w))return 's';if(/^(always|often|sometimes|never|How often)$/.test(w))return 'x';if(/^(do|does not|does)$/.test(w))return 'n';if(w==='.'||w==='?')return 'p';
+  if(/^(borrow|borrows|buy|buys|meet|meets|send|sends|write|writes|visit|visits|go|goes)$/.test(w))return 'v';return 'a';}
+function buildUI(){return `<div class="build"><div class="slot" id="slot" aria-live="polite"></div><div class="bank" id="bank"></div><div class="tools"><button type="button" class="tool" id="undo">↶ Undo</button><button type="button" class="tool" id="clear">Clear</button><button type="button" class="tool go" id="check">Check ✔</button></div></div>`;}
+function builder(target,extras,onDone){
+  const words=shuffle(target.concat(extras));
+  $('#bank').innerHTML=words.map((w,i)=>`<button type="button" class="tile ${kindOf(w)}" data-w="${w}">${w}</button>`).join('');
+  const slot=$('#slot');state.built=[];
+  const draw=()=>{slot.className='slot';slot.innerHTML=state.built.length?state.built.map(b=>`<span class="tile ${kindOf(b.w)}" style="cursor:default">${b.w}</span>`).join(''):'<span style="color:var(--muted)">Tap the words…</span>';};
+  draw();
+  $('#bank').querySelectorAll('.tile').forEach(t=>t.onclick=()=>{if(state.locked)return;t.classList.add('used');state.built.push({w:t.dataset.w,el:t});draw();});
+  $('#undo').onclick=()=>{if(state.locked)return;const b=state.built.pop();if(b)b.el.classList.remove('used');draw();};
+  $('#clear').onclick=()=>{if(state.locked)return;state.built.forEach(b=>b.el.classList.remove('used'));state.built=[];draw();};
+  $('#check').onclick=()=>{if(state.locked)return;const got=state.built.map(b=>b.w);
+    if(got.join(' ')===target.join(' ')){slot.className='slot right pop';onDone(true,got);}else{slot.className='slot wrong pop';onDone(false,got);}};
+}
+const join=ws=>ws.join(' ').replace(' .','.').replace(' ?','?');
+/* 2. How often do you …? */
+function rAsk(){
+  const [k,place]=rnd(PLACES), n=rnd([4,3,2,0]);
+  const target=['How often','do','you','go','to '+place,'?'];
+  $('#stage').innerHTML=header()+`<div class="scene">${badge('you')}${pic(k)}<div class="clue">${mark('q')}${starsHTML(n)}</div></div>`+buildUI()+`<div id="ansZone" style="width:100%"></div><div class="feedback" id="fb"></div>`;
+  builder(target,['does','goes','.'],(ok,got)=>{
+    if(!ok){scored(false);
+      let h='Check the order: <b>How often</b> + <b>do</b> + <b>you</b> + <b>go</b> …';
+      if(got[0]!=='How often') h='Start with <b>How often</b>.'; else if(got[1]==='does') h='With <b>you</b> we use <b>do</b>.'; else if(got.includes('goes')) h='After <b>do you</b> → <b>go</b> (no -es).'; else if(got[got.length-1]!=='?') h='A question ends with <b>?</b>';
+      feedback('hint',h,false);return;}
+    state.locked=true;
+    feedback('good',`<b>${join(target)}</b> Now answer with the stars!`,false);
+    const others=shuffle([4,3,2,0].filter(x=>x!==n)).slice(0,2);
+    const opts=shuffle([n,...others]).map(x=>`I ${ADV[x]} go to ${place}.`);
+    $('#ansZone').innerHTML=answersHTML(opts,true);
+    state.locked=false;
+    const right=`I ${ADV[n]} go to ${place}.`;
+    document.querySelectorAll('#ansZone .ans').forEach(b=>b.onclick=()=>{
+      if(b.disabled) return;
+      if(b.textContent===right){b.classList.add('right');state.locked=true;scored(true);finalize();document.querySelectorAll('#ansZone .ans').forEach(x=>x.disabled=true);feedback('good',`<b>${join(target)} ${right}</b>`,true);}
+      else{b.classList.add('wrong');b.disabled=true;scored(false);feedback('bad',`Look at the stars → <b>${ADV[n]}</b>.`,false);}
+    });
+    $('#bank').querySelectorAll('.tile').forEach(t=>t.disabled=true);
+  });
+}
+/* 3. +s */
+function rS(){
+  const p=rnd(PEOPLE), a=rnd(ACTS);
+  const right=third(a[1]), wrong=a[1];
+  $('#stage').innerHTML=header()+`<div class="scene">${personHTML(p)}${pic(a[0])}<div class="clue">${mark('ok')}<span class="word">${a[1]} ${a[2]}</span></div></div>
+    <div class="sentence">${p[0]} <span class="gap">?</span> ${a[2]}.</div>`+answersHTML(shuffle([right,wrong]))+`<div class="feedback" id="fb"></div>`;
+  bindChoice('.ans',right,`<b>${p[0]} ${right} ${a[2]}.</b>`,()=>a[1]==='go'?`${p[2]}: go → <b>goes</b>.`:`${p[2]} → add <b>s</b>: ${a[1]}<b>s</b>.`);
+  document.querySelectorAll('.ans').forEach(b=>b.addEventListener('click',()=>{ if(b.classList.contains('right')) $('.gap').textContent=right; }));
+}
+/* 4. does not */
+function rNeg(){
+  const p=rnd(PEOPLE), a=rnd(ACTS), pos=Math.random()<.35;
+  const okS=`${p[0]} ${third(a[1])} ${a[2]}.`, negS=`${p[0]} does not ${a[1]} ${a[2]}.`, badS=`${p[0]} does not ${third(a[1])} ${a[2]}.`;
+  const right=pos?okS:negS;
+  $('#stage').innerHTML=header()+`<div class="scene">${personHTML(p)}${pic(a[0])}<div class="clue">${mark(pos?'ok':'no')}<span class="word">${a[1]} ${a[2]}</span></div></div>`
+    +answersHTML(shuffle([okS,negS,badS]),true)+`<div class="feedback" id="fb"></div>`;
+  bindChoice('.ans',right,`<b>${right}</b>`,t=>t===badS?'After <b>does not</b> → no <b>s</b>.':pos?'Look: ✔ → no <b>does not</b>.':'Look: ✘ → use <b>does not</b>.');
+}
+/* 5. build */
+function rBuild(){
+  const p=rnd(PEOPLE), a=rnd(ACTS), pos=Math.random()<.5;
+  const target=pos?[p[0],third(a[1]),a[2],'.']:[p[0],'does not',a[1],a[2],'.'];
+  const extras=pos?[a[1],'does not']:[third(a[1])];
+  $('#stage').innerHTML=header()+`<div class="scene">${personHTML(p)}${pic(a[0])}<div class="clue">${mark(pos?'ok':'no')}<span class="word">${a[1]} ${a[2]}</span></div></div>`+buildUI()+`<div class="feedback" id="fb"></div>`;
+  builder(target,extras,(ok,got)=>{
+    if(ok){state.locked=true;scored(true);finalize();feedback('good',`<b>${join(target)}</b> Well done!`,true);return;}
+    scored(false);
+    let h='Check the order of the words.';
+    if(got[0]!==p[0]) h=`Start with <b>${p[0]}</b>.`;
+    else if(pos && got.includes('does not')) h='✔ → no <b>does not</b>.';
+    else if(!pos && !got.includes('does not')) h='✘ → you need <b>does not</b>.';
+    else if(pos && got[1]!==third(a[1])) h=`${p[2]} → <b>${third(a[1])}</b>.`;
+    else if(!pos && got.includes(third(a[1]))) h='After <b>does not</b> → no <b>s</b>.';
+    else if(got[got.length-1]!=='.') h='Finish with a full stop <b>.</b>';
+    feedback('hint',h,false);
+  });
+}
+function finish(){
+  const good=state.results.filter(x=>x===true).length, stars=good>=7?3:good>=5?2:1, next=state.level<LEVELS.length-1;
+  $('#stage').innerHTML=`<div class="done-card pop"><div class="big">${good} / ${ROUNDS}</div><div class="bigstars" aria-label="${stars} stars">${'★'.repeat(stars)}<span style="color:var(--line)">${'★'.repeat(3-stars)}</span></div>
+    <p class="goal">${good>=7?'Excellent!':good>=5?'Very good!':'Good try! Play again.'}<small>Primer intento correcto en ${good} de ${ROUNDS}.</small></p>
+    <div class="answers"><button type="button" class="ans" id="again">Play again</button>${next?`<button type="button" class="ans" id="nextL">Level ${state.level+2} ➜</button>`:''}</div></div>`;
+  $('#again').onclick=()=>startLevel(state.level); if(next)$('#nextL').onclick=()=>startLevel(state.level+1); beep(true);
+}
+renderNav(); newRound();
+</script>
+
+</body></html>
